@@ -5,18 +5,14 @@ const isDate = ( value ) =>{
     if ( !value ){
         return false
     }
-
     const fecha = moment( value )
     if ( fecha.isValid() ){
         return true;
-    }else{
+    }
+    else{
         return false;
     }
 }
-
-
-
-
 
 
 module.exports = {

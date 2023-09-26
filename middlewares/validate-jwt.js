@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 
 const validateJWT = ( req, res = response, next ) => {
     // X-TOKEN HEADERS
-
     const token = req.header('x-token');
 
     if ( !token ) {
@@ -29,10 +28,7 @@ const validateJWT = ( req, res = response, next ) => {
             msg: 'token is not valid'
         })
     }
-
     next();
-
-
 }
 
 

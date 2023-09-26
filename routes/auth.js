@@ -3,7 +3,6 @@
     host + /api/auth
 */
 
-
 const { Router } = require('express');
 const router = Router();
 const { check } = require('express-validator')
@@ -12,8 +11,7 @@ const { validateFields } = require('../middlewares/validate-fields');
 const { validateJWT } = require('../middlewares/validate-jwt');
 
 router.post(
-    '/new',
-    //Middlewares
+    '/new',    
     [
         check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('email', 'El email es obligatorio').isEmail(),

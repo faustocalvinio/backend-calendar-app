@@ -10,7 +10,6 @@ const { validateJWT } = require('../middlewares/validate-jwt');
 const { check } = require('express-validator');
 const { isDate } = require('../helpers/isDate');
 
-
 const router = Router();
 
 // USAR MIDDLEWARE PARA TODO
@@ -37,6 +36,5 @@ router.put('/:id',
     updateEvent );
 
 router.delete('/:id', deleteEvent );
-
 
 module.exports = router;

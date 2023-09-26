@@ -3,7 +3,7 @@ const express = require('express');
 const { dbConnection } = require('./database/config');
 const cors = require('cors');
 
-
+// USANDO PAQUETE DOTENV NECESARIO PARA LEER EL ARCHIVO .ENV
 require('dotenv').config();
 
 // CREAR SERVIDOR EXPRESS
@@ -22,13 +22,13 @@ app.use(express.static('public'));
 app.use( express.json() );
 
 // RUTAS
-// TODO AUTH : CREAR LOGIN RENEW
 
 app.use('/api/auth', require('./routes/auth'));
 
 
 app.use('/api/events', require('./routes/events'));
-// TODO CRUD: EVENTOS
+
+// CUALQUIER OTRA REQUEST
 
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');

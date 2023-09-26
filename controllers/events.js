@@ -118,10 +118,7 @@ const deleteEvent = async ( req, res = response ) => {
             ok:false,
             msg:'Error deleting event,please contact the administrator'
         })
-    }
-
-
-    
+    }    
 }
 
 module.exports = {
