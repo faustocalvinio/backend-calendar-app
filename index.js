@@ -13,28 +13,24 @@ const app = express();
 dbConnection();
 
 // CORS
-app.use( cors() )
+app.use(cors());
 
 // DIRECTORIO PUBLICO
 app.use(express.static('public')); 
 
 // LECTURA Y PARSEO DEL BODY
-app.use( express.json() );
+app.use(express.json());
 
 // RUTAS
 
 app.use('/api/auth', require('./routes/auth'));
-
-
 app.use('/api/events', require('./routes/events'));
 
 // CUALQUIER OTRA REQUEST
 
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
-})
-
-
+});
 
 // ESCUCHAR PETICIONES
 app.listen(process.env.PORT, () => {
