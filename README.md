@@ -7,3 +7,6 @@ This repository contains the back-end code of a calendar application created dur
  [NodeJS]()
 
  [Express]()
+
+
+![Structure](/public/structure.svg)
