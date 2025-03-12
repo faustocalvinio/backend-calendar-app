@@ -1,7 +1,9 @@
+import { Request, Response } from "express";
+import express from "express";
+import cors from "cors"
+import { dbConnection } from "./database/config";
+
 // IMPORTAR EXPRESS
-const express = require('express');
-const { dbConnection } = require('./database/config');
-const cors = require('cors');
 
 // USANDO PAQUETE DOTENV NECESARIO PARA LEER EL ARCHIVO .ENV
 require('dotenv').config();
@@ -28,7 +30,7 @@ app.use('/api/events', require('./routes/events'));
 
 // CUALQUIER OTRA REQUEST
 
-app.get('*', (req, res) => {
+app.get('*', (req:Request, res:Response) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 

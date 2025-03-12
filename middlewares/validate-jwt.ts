@@ -1,20 +1,19 @@
-const { response } = require('express');
-const jwt = require('jsonwebtoken');
-
-const validateJWT = ( req, res = response, next ) => {
+import { NextFunction, Request, Response } from "express";
+import { verify } from "jsonwebtoken";
+export const validateJWT = (req: Request, res: Response, next: NextFunction) => {
     // X-TOKEN HEADERS
     const token = req.header('x-token');
 
-    if ( !token ) {
+    if (!token) {
         return res.status(401).json({
             ok: false,
             msg: 'no token in the request'
-        });    
+        });
     };
     try {
-        const { uid, name } = jwt.verify(
+        const { uid, name } = verify(
             token,
-            process.env.JWT_SECRET_PRIVATE_KEY
+            process.env.JWT_SECRET_PRIVATE_KEY!
         );
         req.uid = uid;
         req.name = name;
@@ -28,6 +27,3 @@ const validateJWT = ( req, res = response, next ) => {
     next();
 };
 
-module.exports = { 
-    validateJWT
-};
