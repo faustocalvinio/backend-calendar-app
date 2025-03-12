@@ -3,10 +3,10 @@ import Event from "../models/Event";
 import mongoose from "mongoose";
 
 interface CustomReq extends Request {
-    uid: string
+    uid?: string
 }
 
-export const getEvents = async (req: Request, res: Response) => {
+export const getEvents = async (req: CustomReq, res: Response) => {
 
     const events = await Event.find()
         .populate('user', 'name')
@@ -97,14 +97,14 @@ export const deleteEvent = async (req: CustomReq, res: Response) => {
         const event = await Event.findById(eventId);
 
         if (!event) {
-            return res.status(404).json({
+            res.status(404).json({
                 ok: false,
                 msg: 'Event not found'
             })
         }
 
-        if (event.user.toString() !== uid) {
-            return res.status(401).json({
+        if (event!.user.toString() !== uid) {
+            res.status(401).json({
                 ok: false,
                 msg: 'You are not authorized to delete this event'
             })

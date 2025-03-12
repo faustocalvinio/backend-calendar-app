@@ -1,7 +1,7 @@
 import moment from "moment";
 
 
-export const isDate = ( value ) =>{    
+export const isDate = ( value:number ) =>{    
     if ( !value ){
         return false
     };

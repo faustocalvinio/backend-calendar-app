@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors"
 import { dbConnection } from "./database/config";
 
+
 // IMPORTAR EXPRESS
 
 // USANDO PAQUETE DOTENV NECESARIO PARA LEER EL ARCHIVO .ENV

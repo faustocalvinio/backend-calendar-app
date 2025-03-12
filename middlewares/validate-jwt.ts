@@ -1,29 +1,40 @@
 import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
-export const validateJWT = (req: Request, res: Response, next: NextFunction) => {
-    // X-TOKEN HEADERS
+import { Middleware } from "express-validator/src/base";
+import { JwtPayload, verify } from "jsonwebtoken";
+
+// Extender la interfaz Request para agregar las propiedades `uid` y `name`
+interface CustomReq extends Request {
+    uid?: string;
+    name?: string;
+}
+
+// Cambiar la firma del middleware para que sea compatible con Express
+export const validateJWT:Middleware = (req: CustomReq, res: Response, next: NextFunction): void => {
     const token = req.header('x-token');
 
     if (!token) {
-        return res.status(401).json({
+         res.status(401).json({
             ok: false,
-            msg: 'no token in the request'
+            msg: 'No token in the request',
         });
-    };
+    }
+
     try {
-        const { uid, name } = verify(
-            token,
+        const payload = verify(
+            token!,
             process.env.JWT_SECRET_PRIVATE_KEY!
-        );
+        ) as JwtPayload;
+
+        const { uid, name } = payload;
         req.uid = uid;
         req.name = name;
 
     } catch (error) {
-        return res.status(401).json({
+         res.status(401).json({
             ok: false,
-            msg: 'token is not valid'
-        })
-    };
+            msg: 'Token is not valid',
+        });
+    }
+
     next();
 };
-
