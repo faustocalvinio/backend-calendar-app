@@ -1,19 +1,19 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import User from "../models/User";
 import bcryptjs from "bcryptjs"
 import { generateJWT } from "../helpers/jwt"
 interface CustomReq extends Request {
-    uid: string,
-    name: string
+    uid?: string,
+    name?: string
 }
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response): Promise<void> => {
 
     const { email, password } = req.body;
 
     try {
         let user = await User.findOne({ email });
         if (user) {
-            return res.status(400).json({
+            res.status(400).json({
                 ok: false,
                 msg: 'El user ya existe con ese email'
             });
@@ -42,7 +42,7 @@ export const createUser = async (req: Request, res: Response) => {
     };
 };
 
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
     const { email, password } = req.body;
 
@@ -50,27 +50,27 @@ export const loginUser = async (req: Request, res: Response) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(400).json({
+            res.status(400).json({
                 ok: false,
                 msg: 'El user no existe con ese email'
             });
         };
 
-        const validPassword = bcryptjs.compareSync(password, user.password);
+        const validPassword = bcryptjs.compareSync(password, user!.password);
 
         if (!validPassword) {
-            return res.status(400).json({
+            res.status(400).json({
                 ok: false,
                 msg: 'El password es incorrecto'
             })
         };
         // GENERAR TOKEN DE AUTH
-        const token = await generateJWT(user.id, user.name);
+        const token = await generateJWT(user!.id, user!.name);
 
         res.status(200).json({
             ok: true,
-            uid: user.id,
-            name: user.name,
+            uid: user!.id,
+            name: user!.name,
             token
         });
 
@@ -85,7 +85,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
 
 
-export const renewToken = async (req: CustomReq, res: Response) => {
+export const renewToken = async (req: CustomReq, res: Response): Promise<void> => {
 
     const { uid, name } = req;
     const token = await generateJWT(uid, name);

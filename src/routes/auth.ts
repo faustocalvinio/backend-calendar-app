@@ -9,9 +9,9 @@ import { createUser, loginUser, renewToken } from "../controllers/auth";
 import { validateJWT } from "../middlewares/validate-jwt";
 import { Router } from "express";
 
-const router = Router()
+export const authRouter = Router()
 
-router.post(
+authRouter.post(
     '/new',
     [
         check('name', 'El nombre es obligatorio').not().isEmpty(),
@@ -22,7 +22,7 @@ router.post(
     createUser
 )
 
-router.post(
+authRouter.post(
     '/',
     [
         check('email', 'El email es obligatorio').isEmail(),
@@ -31,6 +31,5 @@ router.post(
     ],
     loginUser)
 
-router.get('/renew', validateJWT, renewToken)
+authRouter.get('/renew', validateJWT, renewToken)
 
-module.exports = router;

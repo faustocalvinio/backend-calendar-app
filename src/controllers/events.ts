@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import Event from "../models/Event";
 import mongoose from "mongoose";
 
@@ -42,7 +42,7 @@ export const createEvent = async (req: CustomReq, res: Response) => {
     }
 }
 
-export const updateEvent = async (req: CustomReq, res: Response) => {
+export const updateEvent = async (req: CustomReq, res: Response): Promise<void> => {
 
     const eventId = req.params.id;
     const uid = req.uid;
@@ -52,14 +52,14 @@ export const updateEvent = async (req: CustomReq, res: Response) => {
         const event = await Event.findById(eventId);
 
         if (!event) {
-            return res.status(404).json({
+            res.status(404).json({
                 ok: false,
                 msg: 'Event not found'
             })
         }
 
-        if (event.user.toString() !== uid) {
-            return res.status(401).json({
+        if (event!.user.toString() !== uid) {
+            res.status(401).json({
                 ok: false,
                 msg: 'You are not authorized to update this event'
             })
@@ -87,7 +87,7 @@ export const updateEvent = async (req: CustomReq, res: Response) => {
 }
 
 
-export const deleteEvent = async (req: CustomReq, res: Response) => {
+export const deleteEvent = async (req: CustomReq, res: Response): Promise<void> => {
 
     const eventId = req.params.id;
     const uid = req.uid;
@@ -119,7 +119,7 @@ export const deleteEvent = async (req: CustomReq, res: Response) => {
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        res.status(500).json({
             ok: false,
             msg: 'Error deleting event,please contact the administrator'
         })

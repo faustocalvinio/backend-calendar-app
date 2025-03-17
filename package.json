@@ -4,6 +4,7 @@
    "description": "",
    "main": "index.js",
    "scripts": {
+      "build":"tsc",
       "dev": "nodemon --exec ts-node index.ts",
       "start": "node index.js"
    },
@@ -12,6 +13,7 @@
    "license": "ISC",
    "dependencies": {
       "@types/express": "^5.0.0",
+      "@types/mongoose": "^5.11.96",
       "bcryptjs": "^2.4.3",
       "cors": "^2.8.5",
       "dotenv": "^16.3.1",
@@ -19,7 +21,7 @@
       "express-validator": "^7.0.1",
       "jsonwebtoken": "^9.0.2",
       "moment": "^2.29.4",
-      "mongoose": "^7.5.2"
+      "mongoose": "^7.8.6"
    },
    "type": "module",
    "engines": {
